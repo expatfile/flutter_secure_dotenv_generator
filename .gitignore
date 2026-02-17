@@ -9,3 +9,5 @@ pubspec.lock
 .vscode/
 
 .env*
+
+example/flutter_secure_dotenv_generator_example.g.dart

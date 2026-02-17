@@ -23,7 +23,7 @@ void main() {
     });
 
     test('should throw exception if element is not a class', () async {
-      final element = FunctionElementImpl('testFunction');
+      final element = TopLevelFunctionElementMock('testFunction');
       final annotation = ConstantReader(null);
       final buildStep = BuildStepMock();
 
@@ -38,7 +38,7 @@ void main() {
   group('EnvironmentField', () {
     test('should create an instance of EnvironmentField', () {
       final field = EnvironmentField('name', 'nameOverride',
-          DartTypeImpl('String'), DartObjectImpl('defaultValue'));
+          DartTypeMock('String'), DartObjectMock('defaultValue'));
 
       expect(field.name, 'name');
       expect(field.nameOverride, 'nameOverride');
@@ -49,7 +49,7 @@ void main() {
 
   group('Helpers', () {
     test('should get all accessor names', () {
-      final interface = InterfaceElementImpl('TestInterface');
+      final interface = InterfaceElementMock('TestInterface');
       final accessorNames = getAllAccessorNames(interface);
 
       expect(accessorNames, isNotEmpty);
@@ -63,108 +63,115 @@ class BuildStepMock implements BuildStep {
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class FunctionElementImpl implements FunctionElement {
-  @override
-  final String name;
+class TopLevelFunctionElementMock implements TopLevelFunctionElement {
+  final String _name;
 
-  FunctionElementImpl(this.name);
-
-  @override
-  List<ElementAnnotation> get metadata => [];
+  TopLevelFunctionElementMock(this._name);
 
   @override
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class ClassElementImpl implements ClassElement {
-  @override
-  final String name;
-
-  ClassElementImpl(this.name);
-
-  @override
-  List<ElementAnnotation> get metadata => [];
+  String? get name => _name;
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class DartTypeImpl implements DartType {
-  @override
-  final String name;
+class ClassElementMock implements ClassElement {
+  final String _name;
 
-  DartTypeImpl(this.name);
+  ClassElementMock(this._name);
+
+  @override
+  String? get name => _name;
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class DartObjectImpl implements DartObject {
+class DartTypeMock implements DartType {
+  final String typeName;
+
+  DartTypeMock(this.typeName);
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class DartObjectMock implements DartObject {
   final dynamic value;
 
-  DartObjectImpl(this.value);
+  DartObjectMock(this.value);
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class FieldElementImpl implements FieldElement {
+class FieldElementMock implements FieldElement {
   @override
-  final String name;
+  final String? name;
   @override
   final DartType type;
 
-  FieldElementImpl(this.name, this.type);
-
-  @override
-  List<ElementAnnotation> get metadata => [];
+  FieldElementMock(this.name, this.type);
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class InterfaceElementImpl implements InterfaceElement {
-  @override
-  final String name;
+class InterfaceElementMock implements InterfaceElement {
+  final String _name;
 
-  InterfaceElementImpl(this.name);
+  InterfaceElementMock(this._name);
 
   @override
-  List<ElementAnnotation> get metadata => [];
+  String? get name => _name;
 
   @override
   List<InterfaceType> get allSupertypes => [];
 
   @override
-  List<PropertyAccessorElement> get accessors => [
-        PropertyAccessorElementImpl('accessor1', false),
-        PropertyAccessorElementImpl('accessor2', false),
+  List<GetterElement> get getters => [
+        GetterElementMock('accessor1'),
+        GetterElementMock('accessor2'),
       ];
 
   @override
-  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
-}
-
-class LibraryElementImpl implements LibraryElement {
-  @override
-  final String name;
-
-  LibraryElementImpl(this.name);
-
-  @override
-  List<ElementAnnotation> get metadata => [];
+  List<SetterElement> get setters => [];
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
 }
 
-class PropertyAccessorElementImpl implements PropertyAccessorElement {
-  @override
-  final String name;
-  @override
-  final bool isSetter;
+class LibraryElementMock implements LibraryElement {
+  final String _name;
 
-  PropertyAccessorElementImpl(this.name, this.isSetter);
+  LibraryElementMock(this._name);
+
+  @override
+  String? get name => _name;
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class GetterElementMock implements GetterElement {
+  final String _name;
+
+  GetterElementMock(this._name);
+
+  @override
+  String? get name => _name;
+
+  @override
+  noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
+}
+
+class SetterElementMock implements SetterElement {
+  final String _name;
+
+  SetterElementMock(this._name);
+
+  @override
+  String? get name => _name;
 
   @override
   noSuchMethod(Invocation invocation) => super.noSuchMethod(invocation);
